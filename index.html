@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vita Food - ויטה פוד</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-orange: #f4911e;
+            --brand-brown: #2d1a16;
+        }
+
+        body {
+            font-family: 'Assistant', sans-serif;
+            background-color: var(--brand-brown);
+            color: white;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        /* רקע תמונה עם המבורגר אחד - חזרה לגרסה המבוקשת */
+        .hero-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(to bottom, rgba(45, 26, 22, 0.8), rgba(45, 26, 22, 0.95)), 
+                              url('https://images.unsplash.com/photo-1571091718767-18b5b1457add?q=80&w=2072&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.07);
+            transform: translateY(-5px);
+            border-color: var(--brand-orange);
+        }
+
+        .logo-circle {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(180deg, var(--brand-brown) 50%, var(--brand-orange) 50%);
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .view { display: none; opacity: 0; transition: opacity 0.4s ease; }
+        .view.active { display: block; opacity: 1; }
+
+        .price-badge {
+            background: var(--brand-orange);
+            color: var(--brand-brown);
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-weight: 800;
+        }
+
+        /* עיצוב כותרת התפריט */
+        .menu-header-styled {
+            text-align: center;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .food-menu-script {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: var(--brand-orange);
+            line-height: 1.2;
+            margin-bottom: -15px;
+            z-index: 10;
+        }
+
+        .tafrit-bold {
+            font-size: 4.5rem;
+            font-weight: 900;
+            color: white;
+            opacity: 0.95;
+            letter-spacing: -1px;
+            line-height: 1;
+        }
+
+        /* לוגואים של חברות משלוחים */
+        .delivery-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 10px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        .logo-wolt { background-color: #00c2e8; color: white; }
+        .logo-tenbis { background-color: #ff4e00; color: white; line-height: 1; }
+    </style>
+</head>
+<body>
+
+    <div class="hero-bg"></div>
+
+    <!-- דף נחיתה ראשי -->
+    <div id="home-view" class="view active px-6 pt-12 pb-24">
+        <header class="text-center mb-12">
+            <div class="logo-circle mb-6">
+                <span class="font-black text-lg text-white">VITA</span>
+                <span class="font-black text-lg border-t border-white/30 w-full text-center text-white">FOOD</span>
+            </div>
+            <h1 class="text-4xl font-black text-white mb-2 tracking-tight">VITA FOOD</h1>
+            <p class="text-orange-400 font-bold tracking-widest text-sm uppercase">Premium Burgers & Meat</p>
+        </header>
+
+        <div class="max-w-md mx-auto space-y-6">
+            <!-- כרטיס תפריט -->
+            <div onclick="showView('menu-view')" class="glass-card rounded-3xl p-8 flex flex-col items-center cursor-pointer group">
+                <div class="w-16 h-16 bg-orange-500/20 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-orange-500 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-orange-500 group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                </div>
+                <h2 class="text-2xl font-black mb-1">לתפריט הדיגיטלי</h2>
+                <p class="text-gray-400 text-sm">המבורגרים, פרנות ושתייה קרה</p>
+            </div>
+
+            <!-- כרטיס ביקורת - קישור מעודכן לכתיבת ביקורת בגוגל -->
+            <a href="https://search.google.com/local/writereview?placeid=ChIJg-W3-05THBURSuuTalV3WlI" target="_blank" class="glass-card rounded-3xl p-8 flex flex-col items-center group block">
+                <div class="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white group-hover:text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.382-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                    </svg>
+                </div>
+                <h2 class="text-2xl font-black mb-1">השאירו ביקורת</h2>
+                <p class="text-gray-400 text-sm">לחצו לכתיבת חוות דעת בגוגל</p>
+            </a>
+        </div>
+    </div>
+
+    <!-- דף תפריט דיגיטלי -->
+    <div id="menu-view" class="view min-h-screen bg-black/90 pb-20">
+        <nav class="sticky top-0 bg-black/80 backdrop-blur-md z-50 p-4 border-b border-white/10 flex items-center justify-between">
+            <button onclick="showView('home-view')" class="text-orange-500 font-bold flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 rotate-180" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                </svg>
+                חזרה
+            </button>
+            <div class="w-10 h-10 border-2 border-orange-500 rounded-full flex items-center justify-center p-1">
+                 <span class="text-[6px] font-bold text-center leading-tight text-orange-500">כשר<br>מהדרין</span>
+            </div>
+        </nav>
+
+        <div class="max-w-2xl mx-auto px-6 pt-10">
+            <!-- כותרת תפריט מופרדת -->
+            <div class="menu-header-styled mb-8">
+                <div class="food-menu-script">Food Menu</div>
+                <div class="tafrit-bold">תפריט</div>
+                <div class="mt-4 text-[#f4911e] font-bold tracking-widest text-sm uppercase">ויטה פוד - VITA FOOD</div>
+            </div>
+
+            <!-- סקשן ארוחות עסקיות -->
+            <div class="text-center mb-10 bg-orange-500/10 p-4 rounded-2xl border border-orange-500/20 shadow-[0_0_15px_rgba(244,145,30,0.1)]">
+                <h3 class="text-xl font-bold text-orange-500 uppercase tracking-wide">ארוחות עסקיות</h3>
+                <p class="text-sm mt-1 text-gray-200">12:00-15:00 | צ'יפס + פחית כלול</p>
+                <p class="text-[10px] text-gray-400 mt-1">*ניתן לשדרג צ'יפס/שתייה בתוספת תשלום</p>
+            </div>
+
+            <!-- בורגר טיים -->
+            <section class="mb-12">
+                <h3 class="text-2xl font-black text-orange-500 border-b-2 border-orange-500/30 pb-2 mb-4 uppercase tracking-tighter">בורגר טיים</h3>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center py-2 border-b border-white/5">
+                        <div class="font-bold text-lg">המבורגר אנטריקוט (200 ג')</div>
+                        <span class="price-badge">85 ₪</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-white/5">
+                        <div class="font-bold text-lg">המבורגר כבש (200 ג')</div>
+                        <span class="price-badge">75 ₪</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-white/5">
+                        <div class="font-bold text-lg">המבורגר בקר (220 ג')</div>
+                        <span class="price-badge">75 ₪</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-white/5">
+                        <div class="font-bold text-lg">המבורגר בקר (180 ג')</div>
+                        <span class="price-badge">65 ₪</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ביס של אושר -->
+            <section class="mb-12">
+                <h3 class="text-2xl font-black text-orange-500 border-b-2 border-orange-500/30 pb-2 mb-4 uppercase tracking-tighter">ביס של אושר</h3>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center py-2 border-b border-white/5">
+                        <div class="font-bold text-lg">פרגית / שניצל פנקו / חזה עוף</div>
+                        <span class="price-badge">70 ₪</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-white/5">
+                        <div class="font-bold text-lg">בריסקט / אסאדו בפרנה</div>
+                        <span class="price-badge">75 ₪</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- משקאות -->
+            <section class="mb-12">
+                <h3 class="text-2xl font-black text-orange-500 border-b-2 border-orange-500/30 pb-2 mb-4 uppercase tracking-tighter">משקאות ובירה</h3>
+                <div class="grid grid-cols-1 gap-3">
+                    <div class="flex justify-between text-sm py-1 border-b border-white/5"><span>פחיות / מים / סודה</span><span class="font-bold text-orange-500">10 ₪</span></div>
+                    <div class="flex justify-between text-sm py-1 border-b border-white/5"><span>בקבוק 0.5 מ"ל</span><span class="font-bold text-orange-500">12 ₪</span></div>
+                    <div class="flex justify-between text-sm py-1 border-b border-white/5"><span>בירה קרלסברג</span><span class="font-bold text-orange-500">20 ₪</span></div>
+                    <div class="flex justify-between text-sm py-1 border-b border-white/5"><span>בירה ווינשטפן</span><span class="font-bold text-orange-500">25 ₪</span></div>
+                </div>
+            </section>
+
+            <!-- סמלים של משלוחים -->
+            <div class="flex justify-center gap-8 mt-16 opacity-40 pointer-events-none">
+                <div class="delivery-logo logo-wolt">Wolt</div>
+                <div class="delivery-logo logo-tenbis">TEN<br>BIS</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showView(viewId) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
